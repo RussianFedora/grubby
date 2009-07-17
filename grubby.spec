@@ -1,5 +1,5 @@
 Name: grubby
-Version: 7.0
+Version: 7.0.1
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -49,6 +49,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jul 17 2009 Jeremy Katz <katzj@redhat.com> - 7.0.1-1
+- Fix blkid usage (#124246)
+
 * Wed Jun 24 2009 Jeremy Katz <katzj@redhat.com> - 7.0-1
 - BR libblkid-devel now instead of e2fsprogs-devel
 - Add bits to switch to using dracut for new-kernel-pkg
