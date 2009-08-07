@@ -1,6 +1,6 @@
 Name: grubby
-Version: 7.0.1
-Release: 2%{?dist}
+Version: 7.0.2
+Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -49,6 +49,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Aug  7 2009 Hans de Goede <hdegoede@redhat.com> - 7.0.2-1
+- Add --add-dracut-args new-kernel-pkg cmdline option
+
 * Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 7.0.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
