@@ -1,5 +1,5 @@
 Name: grubby
-Version: 7.0.2
+Version: 7.0.3
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -49,6 +49,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Aug 26 2009 Hans de Goede <hdegoede@redhat.com> - 7.0.3-1
+- Silence error when no /etc/sysconfig/keyboard (#517187)
+
 * Fri Aug  7 2009 Hans de Goede <hdegoede@redhat.com> - 7.0.2-1
 - Add --add-dracut-args new-kernel-pkg cmdline option
 
