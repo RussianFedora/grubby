@@ -1,5 +1,5 @@
 Name: grubby
-Version: 7.0.6
+Version: 7.0.7
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -49,6 +49,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Sep 11 2009 Hans de Goede <hdegoede@redhat.com> - 7.0.7-1
+- Remove writing rd_plytheme=$theme to kernel args in dracut mode (hansg)
+- Add a couple of test cases for extra initrds (rstrode)
+- Allow tmplLine to be NULL in getInitrdVal (rstrode)
+
 * Fri Sep 11 2009 Peter Jones <pjones@redhat.com> - 7.0.6-1
 - Fix test case breakage from 7.0.5 (rstrode)
 
