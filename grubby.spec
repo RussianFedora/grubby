@@ -1,5 +1,5 @@
 Name: grubby
-Version: 7.0.4
+Version: 7.0.5
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -49,6 +49,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Sep 11 2009 Peter Jones <pjones@redhat.com> - 7.0.5-1
+- Add support for plymouth as a second initrd.
+  Resolves: rhbz#520515
+
 * Wed Sep 09 2009 Hans de Goede <hdegoede@redhat.com> - 7.0.4-1
 - Add --dracut cmdline argument for %post generation of dracut initrd
 
