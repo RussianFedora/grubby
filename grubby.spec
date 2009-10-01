@@ -1,5 +1,5 @@
 Name: grubby
-Version: 7.0.7
+Version: 7.0.8
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -49,6 +49,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Oct  1 2009 Hans de Goede <hdegoede@redhat.com> - 7.0.8-1
+- Stop using nash
+
 * Fri Sep 11 2009 Hans de Goede <hdegoede@redhat.com> - 7.0.7-1
 - Remove writing rd_plytheme=$theme to kernel args in dracut mode (hansg)
 - Add a couple of test cases for extra initrds (rstrode)
