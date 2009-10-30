@@ -1,5 +1,5 @@
 Name: grubby
-Version: 7.0.8
+Version: 7.0.9
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -49,6 +49,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Oct 30 2009 Peter Jones <pjones@redhat.com> - 7.0.9-1
+- Add support for dracut to installkernel (notting)
+
 * Thu Oct  1 2009 Hans de Goede <hdegoede@redhat.com> - 7.0.8-1
 - Stop using nash
 
