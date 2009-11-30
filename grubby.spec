@@ -1,6 +1,6 @@
 Name: grubby
 Version: 7.0.9
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -13,7 +13,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
 BuildRequires: libblkid-devel
 %ifarch s390 s390x
-Requires: s390utils
+Requires: s390utils-base
 %endif
 
 %description
@@ -52,6 +52,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Nov 30 2009 Peter Jones <pjones@redhat.com> - 7.0.9-3
+- Use s390utils-base as the s390 dep, not s390utils
+  Related: rhbz#540565
+
 * Tue Nov 24 2009 Peter Jones <pjones@redhat.com> - 7.0.9-2
 - Add s390utils dep when on s390, since new-kernel-package needs it.
   Resolves: rhbz#540565
