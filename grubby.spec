@@ -1,6 +1,6 @@
 Name: grubby
-Version: 7.0.9
-Release: 3%{?dist}
+Version: 7.0.10
+Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -52,7 +52,7 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Fri Feb 05 2010 Peter Jones <pjones@redhat.com> - 7.0.9-3
+* Fri Feb 05 2010 Peter Jones <pjones@redhat.com> - 7.0.10-1
 - Make --update able to add an initramfs.
   Related: rhbz#557922
 
