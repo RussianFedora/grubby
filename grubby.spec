@@ -52,6 +52,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Feb 05 2010 Peter Jones <pjones@redhat.com> - 7.0.9-3
+- Make --update able to add an initramfs.
+  Related: rhbz#557922
+
 * Mon Nov 30 2009 Peter Jones <pjones@redhat.com> - 7.0.9-3
 - Use s390utils-base as the s390 dep, not s390utils
   Related: rhbz#540565
