@@ -1,5 +1,5 @@
 Name: grubby
-Version: 7.0.11
+Version: 7.0.12
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -52,6 +52,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Feb 08 2010 Peter Jones <pjones@redhat.com> - 7.0.12-1
+- compare rootdev using uuid instead of stat, for better btrfs support (josef)
+  Resolves: rhbz#530108
+
 * Mon Feb 08 2010 Peter Jones <pjones@redhat.com> - 7.0.11-1
 - Make it possible to update the initrd without any other change.
   Related: rhbz#557922
