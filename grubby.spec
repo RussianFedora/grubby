@@ -1,5 +1,5 @@
 Name: grubby
-Version: 7.0.10
+Version: 7.0.11
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -52,6 +52,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Feb 08 2010 Peter Jones <pjones@redhat.com> - 7.0.11-1
+- Make it possible to update the initrd without any other change.
+  Related: rhbz#557922
+
 * Fri Feb 05 2010 Peter Jones <pjones@redhat.com> - 7.0.10-1
 - Make --update able to add an initramfs.
   Related: rhbz#557922
