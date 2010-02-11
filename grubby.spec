@@ -1,5 +1,5 @@
 Name: grubby
-Version: 7.0.12
+Version: 7.0.13
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -52,6 +52,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Feb 11 2010 Peter Jones <pjones@redhat.com> - 7.0.13-1
+- Strip boot partition prefix from initrd path if present during --update.
+  Related: rhbz#557922
+- add host only support for local kernel compiles (airlied)
+
 * Mon Feb 08 2010 Peter Jones <pjones@redhat.com> - 7.0.12-1
 - compare rootdev using uuid instead of stat, for better btrfs support (josef)
   Resolves: rhbz#530108
