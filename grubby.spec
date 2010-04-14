@@ -1,5 +1,5 @@
 Name: grubby
-Version: 7.0.14
+Version: 7.0.15
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -52,10 +52,13 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Wed Apr 14 2010 Peter Jones <pjones@redhat.com> - 7.0.14-1
-- Update to 7.0.14
+* Wed Apr 14 2010 Peter Jones <pjones@redhat.com> - 7.0.15-1
+- Update to 7.0.15
 - Add man pages for installkernel and new-kernel-pkg
   Resolves: rhbz#529333
+
+* Wed Apr 14 2010 Peter Jones <pjones@redhat.com> - 7.0.14-1
+- Update to 7.0.14
 
 * Thu Feb 11 2010 Peter Jones <pjones@redhat.com> - 7.0.13-1
 - Strip boot partition prefix from initrd path if present during --update.
