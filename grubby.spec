@@ -1,5 +1,5 @@
 Name: grubby
-Version: 7.0.15
+Version: 7.0.16
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -52,6 +52,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Jul 13 2010 Brian C. Lane <bcl@redhat.com> - 7.0.16-1
+- Update to 7.0.16
+- Add patch to check the return value of getuuidbydev
+- Resolves: rhbz#592294
+
 * Wed Apr 14 2010 Peter Jones <pjones@redhat.com> - 7.0.15-1
 - Update to 7.0.15
 - Add man pages for installkernel and new-kernel-pkg
