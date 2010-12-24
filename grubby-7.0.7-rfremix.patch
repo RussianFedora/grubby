@@ -1,0 +1,30 @@
+diff -urN grubby-7.0.7.orig/new-kernel-pkg grubby-7.0.7/new-kernel-pkg
+--- grubby-7.0.7.orig/new-kernel-pkg	2009-09-22 14:10:05.110240711 +0400
++++ grubby-7.0.7/new-kernel-pkg	2009-09-22 14:10:28.470364305 +0400
+@@ -152,16 +152,19 @@
+ 	cfgLilo=""
+     fi
+ 
++    if [ -n "$banner" ]; then
++        title="$banner ($version)"
++    elif [ -f /etc/rfremix-release ]; then
++	title="$(sed 's/ release.*$//' < /etc/rfremix-release) ($version)"
++    elif [ -f /etc/redhat-release ]; then
++	title="$(sed 's/ release.*$//' < /etc/redhat-release) ($version)"
++    else
++	title="Red Hat Linux ($version)"
++    fi
++
+     if [ -n "$cfgGrub" ]; then
+ 	[ -n "$verbose" ] && echo "adding $version to $grubConfig"
+ 
+-	if [ -n "$banner" ]; then
+-            title="$banner ($version)"
+-	elif [ -f /etc/redhat-release ]; then
+-	    title="$(sed 's/ release.*$//' < /etc/redhat-release) ($version)"
+-	else
+-	    title="Red Hat Linux ($version)"
+-	fi
+ 	$grubby --add-kernel=$bootPrefix/$kernelName-$version \
+ 	    $INITRD --copy-default $makedefault --title "$title" \
+ 	    ${mbkernel:+--add-multiboot="$mbkernel"} ${mbargs:+--mbargs="$mbargs"} \

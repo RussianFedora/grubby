@@ -1,6 +1,6 @@
 Name: grubby
 Version: 7.0.16
-Release: 1%{?dist}
+Release: 1%{?dist}.2
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -9,6 +9,7 @@ URL: http://git.fedorahosted.org/git/grubby.git
 # git clone git://git.fedorahosted.org/git/grubby.git
 # git archive --format=tar --prefix=grubby-%{version}/ HEAD |bzip2 > grubby-%{version}.tar.bz2
 Source0: %{name}-%{version}.tar.bz2
+Patch0: grubby-7.0.7-rfremix.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
 BuildRequires: libblkid-devel
@@ -25,6 +26,7 @@ environment.
 
 %prep
 %setup -q
+%patch0 -p1 -b .rfremix
 
 
 %build
@@ -52,6 +54,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Oct  6 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 7.0.16-1.2
+- rebuilt against gcc bug
+
+* Thu Aug 19 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 7.0.16-1.1
+- rfremixify
+
 * Tue Jul 13 2010 Brian C. Lane <bcl@redhat.com> - 7.0.16-1
 - Update to 7.0.16
 - Add patch to check the return value of getuuidbydev
