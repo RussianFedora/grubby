@@ -1,6 +1,6 @@
 Name: grubby
 Version: 7.0.16
-Release: 1%{?dist}.2
+Release: 3%{?dist}.1
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -54,6 +54,15 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Mar  2 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 7.0.16-3.1
+- rfremixify for Fedora 15
+
+* Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 7.0.16-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild 
+
+* Mon Jan 24 2011 Karsten Hopp <karsten@redhat.com> 7.0.16-2 
+- add BR utils-linux-ng for getopt 
+
 * Thu Oct  6 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 7.0.16-1.2
 - rebuilt against gcc bug
 
