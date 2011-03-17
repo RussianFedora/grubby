@@ -8,7 +8,7 @@ URL: http://git.fedorahosted.org/git/grubby.git
 # we only pull git snaps at the moment
 # git clone git://git.fedorahosted.org/git/grubby.git
 # git archive --format=tar --prefix=grubby-%{version}/ HEAD |bzip2 > grubby-%{version}.tar.bz2
-Source0: %{name}-%{version}.tar.bz2
+Source0: http://cvs.fedoraproject.org/lookaside/pkgs/grubby/grubby-7.0.16.tar.bz2/d838a5f794573f5704248b8322bf3643/%{name}-%{version}.tar.bz2
 Patch0: grubby-7.0.7-rfremix.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
