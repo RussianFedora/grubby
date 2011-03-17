@@ -12,7 +12,7 @@ Source0: http://cvs.fedoraproject.org/lookaside/pkgs/grubby/grubby-7.0.16.tar.bz
 Patch0: grubby-7.0.7-rfremix.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
-BuildRequires: libblkid-devel utils-linux-ng
+BuildRequires: libblkid-devel util-linux-ng
 %ifarch s390 s390x
 Requires: s390utils-base
 %endif
@@ -61,7 +61,7 @@ rm -rf $RPM_BUILD_ROOT
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild 
 
 * Mon Jan 24 2011 Karsten Hopp <karsten@redhat.com> 7.0.16-2 
-- add BR utils-linux-ng for getopt 
+- add BR util-linux-ng for getopt 
 
 * Thu Oct  6 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 7.0.16-1.2
 - rebuilt against gcc bug
