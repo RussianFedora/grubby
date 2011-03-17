@@ -12,7 +12,7 @@ Source0: http://cvs.fedoraproject.org/lookaside/pkgs/grubby/grubby-7.0.16.tar.bz
 Patch0: grubby-7.0.7-rfremix.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
-BuildRequires: libblkid-devel
+BuildRequires: libblkid-devel utils-linux-ng
 %ifarch s390 s390x
 Requires: s390utils-base
 %endif
