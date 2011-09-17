@@ -1,6 +1,6 @@
 Name: grubby
-Version: 7.0.16
-Release: 3%{?dist}.1
+Version: 8.2
+Release: 1%{?dist}.1.R
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -8,11 +8,13 @@ URL: http://git.fedorahosted.org/git/grubby.git
 # we only pull git snaps at the moment
 # git clone git://git.fedorahosted.org/git/grubby.git
 # git archive --format=tar --prefix=grubby-%{version}/ HEAD |bzip2 > grubby-%{version}.tar.bz2
-Source0: http://cvs.fedoraproject.org/lookaside/pkgs/grubby/grubby-7.0.16.tar.bz2/d838a5f794573f5704248b8322bf3643/%{name}-%{version}.tar.bz2
-Patch0: grubby-7.0.7-rfremix.patch
+Source0: %{name}-%{version}.tar.bz2
+Patch0: grubby-8.2-rfremixify.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
-BuildRequires: libblkid-devel util-linux-ng
+BuildRequires: libblkid-devel
+# for make test / getopt:
+BuildRequires: util-linux-ng
 %ifarch s390 s390x
 Requires: s390utils-base
 %endif
@@ -54,20 +56,33 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Wed Mar  2 2011 Arkady L. Shane <ashejn@yandex-team.ru> - 7.0.16-3.1
-- rfremixify for Fedora 15
+* Sat Sep 17 2011 Arkady L. Shane <ashejn@russianfedora> - 8.2-1.1.R
+- get distribution name from rfremix-release
+
+* Wed Sep 14 2011 Peter Jones <pjones@redhat.com> - 8.2-1
+- Fixes for xen (from Michael Petullo)
+  Resolves: rhbz#658387
+
+* Fri Jul 22 2011 Peter Jones <pjones@redhat.com> - 8.1-1
+- Update to 8.1
+- Fix miss-spelled variable name in new-kernel-pkg
+
+* Thu Jul 21 2011 Peter Jones <pjones@redhat.com> - 8.0-1
+- Add support for grub2.
+
+* Tue Jun 07 2011 Brian C. Lane <bcl@redhat.com> - 7.0.18-1
+- Bump version to 7.0.18 (bcl)
+- Fixup new-kernel-pkg errors (#711493) (bcl)
+
+* Mon Jun 06 2011 Peter Jones <pjones@redhat.com> - 7.0.17-1
+- Fix references to wrong program name in new-kernel-pkg.8
+  Resolves: rhbz#663981
 
 * Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 7.0.16-3
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild 
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
-* Mon Jan 24 2011 Karsten Hopp <karsten@redhat.com> 7.0.16-2 
-- add BR util-linux-ng for getopt 
-
-* Thu Oct  6 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 7.0.16-1.2
-- rebuilt against gcc bug
-
-* Thu Aug 19 2010 Arkady L. Shane <ashejn@yandex-team.ru> - 7.0.16-1.1
-- rfremixify
+* Mon Jan 24 2011 Karsten Hopp <karsten@redhat.com> 7.0.16-2
+- add BR utils-linux-ng for getopt
 
 * Tue Jul 13 2010 Brian C. Lane <bcl@redhat.com> - 7.0.16-1
 - Update to 7.0.16

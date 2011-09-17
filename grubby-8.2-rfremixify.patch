@@ -1,0 +1,30 @@
+diff -urN grubby-8.2.orig/new-kernel-pkg grubby-8.2/new-kernel-pkg
+--- grubby-8.2.orig/new-kernel-pkg	2011-09-17 20:13:43.159043712 +0400
++++ grubby-8.2/new-kernel-pkg	2011-09-17 20:16:09.184014052 +0400
+@@ -171,6 +171,8 @@
+ 
+ 	if [ -n "$banner" ]; then
+             title="$banner ($version)"
++        elif [ -f /etc/rfremix-release ]; then
++            title="$(sed 's/ release.*$//' < /etc/rfremix-release) ($version)"
+ 	elif [ -f /etc/redhat-release ]; then
+ 	    title="$(sed 's/ release.*$//' < /etc/redhat-release) ($version)"
+ 	else
+@@ -188,6 +190,8 @@
+ 
+ 	if [ -n "$banner" ]; then
+             title="$banner ($version)"
++        elif [ -f /etc/rfremix-release ]; then
++            title="$(sed 's/ release.*$//' < /etc/rfremix-release) ($version)"
+ 	elif [ -f /etc/redhat-release ]; then
+ 	    title="$(sed 's/ release.*$//' < /etc/redhat-release) ($version)"
+ 	else
+@@ -207,6 +211,8 @@
+ 
+ 	if [ -n "$banner" ]; then
+             title="$banner ($version)"
++        elif [ -f /etc/rfremix-release ]; then
++            title="$(sed 's/ release.*$//' < /etc/rfremix-release) ($version)"
+ 	elif [ -f /etc/redhat-release ]; then
+ 	    title="$(sed 's/ release.*$//' < /etc/redhat-release) ($version)"
+ 	else
