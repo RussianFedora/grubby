@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.2
+Version: 8.3
 Release: 1%{?dist}.1.R
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -28,7 +28,7 @@ environment.
 
 %prep
 %setup -q
-%patch0 -p1 -b .rfremix
+%patch0 -p1
 
 
 %build
@@ -56,8 +56,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Sat Sep 17 2011 Arkady L. Shane <ashejn@russianfedora> - 8.2-1.1.R
+* Wed Oct  5 2011 Arkady L. Shane <ashejn@russianfedora.ru> - 8.3-1.1.R
 - get distribution name from rfremix-release
+
+* Thu Sep 29 2011 Peter Jones <pjones@redhat.com> - 8.3-1
+- Fix new-kernel-pkg invocation of grubby for grub (patch from Mads Kiilerich)
+  Resolves: rhbz#725185
 
 * Wed Sep 14 2011 Peter Jones <pjones@redhat.com> - 8.2-1
 - Fixes for xen (from Michael Petullo)

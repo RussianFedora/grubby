@@ -1,4 +1,4 @@
 #!/bin/sh
 
-curl -sO http://pkgs.fedoraproject.org/repo/pkgs/grubby/grubby-8.2.tar.bz2/60b59b1ac7315fa5bd2ac22f0b0528e3/grubby-8.2.tar.bz2
+curl -sO http://pkgs.fedoraproject.org/repo/pkgs/grubby/grubby-8.3.tar.bz2/b8ca2090b1ef8c107f0e5f5caa26f2f1/grubby-8.3.tar.bz2
 
