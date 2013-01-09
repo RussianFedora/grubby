@@ -1,0 +1,47 @@
+diff -urN grubby-8.22.orig/new-kernel-pkg grubby-8.22/new-kernel-pkg
+--- grubby-8.22.orig/new-kernel-pkg	2013-01-09 19:21:06.503222018 +0400
++++ grubby-8.22/new-kernel-pkg	2013-01-09 19:22:05.189551278 +0400
+@@ -176,8 +176,8 @@
+ 
+ 	if [ -n "$banner" ]; then
+             title="$banner ($version)"
+-	elif [ -f /etc/redhat-release ]; then
+-	    title="$(sed 's/ release.*$//' < /etc/redhat-release) ($version)"
++	elif [ -f /etc/rfremix-release ]; then
++	    title="$(sed 's/ release.*$//' < /etc/rfremix-release) ($version)"
+ 	else
+ 	    title="Red Hat Linux ($version)"
+ 	fi
+@@ -194,8 +194,8 @@
+ 
+ 	if [ -n "$banner" ]; then
+             title="$banner ($version)"
+-	elif [ -f /etc/redhat-release ]; then
+-	    title="$(sed 's/ release.*$//' < /etc/redhat-release) ($version)"
++	elif [ -f /etc/rfremix-release ]; then
++	    title="$(sed 's/ release.*$//' < /etc/rfremix-release) ($version)"
+ 	else
+ 	    title="Red Hat Linux ($version)"
+ 	fi
+@@ -213,8 +213,8 @@
+ 
+ 	if [ -n "$banner" ]; then
+             title="$banner ($version)"
+-	elif [ -f /etc/redhat-release ]; then
+-	    title="$(sed 's/ release.*$//' < /etc/redhat-release) ($version)"
++	elif [ -f /etc/rfremix-release ]; then
++	    title="$(sed 's/ release.*$//' < /etc/rfremix-release) ($version)"
+ 	else
+ 	    title="Red Hat Linux ($version)"
+ 	fi
+@@ -254,8 +254,8 @@
+ 
+ 	if [ -n "$banner" ]; then
+             title="$banner ($version)"
+-	elif [ -f /etc/redhat-release ]; then
+-	    title="$(sed 's/ release.*$//' < /etc/redhat-release) ($version)"
++	elif [ -f /etc/rfremix-release ]; then
++	    title="$(sed 's/ release.*$//' < /etc/rfremix-release) ($version)"
+ 	else
+ 	    title="Red Hat Linux ($version)"
+ 	fi

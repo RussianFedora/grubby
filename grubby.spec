@@ -1,5 +1,5 @@
 Name: grubby
-Version: 7.0.16
+Version: 8.22
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -9,11 +9,17 @@ URL: http://git.fedorahosted.org/git/grubby.git
 # git clone git://git.fedorahosted.org/git/grubby.git
 # git archive --format=tar --prefix=grubby-%{version}/ HEAD |bzip2 > grubby-%{version}.tar.bz2
 Source0: %{name}-%{version}.tar.bz2
+Patch0: grubby-8.22-read-from-rfremix-release.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
-BuildRequires: libblkid-devel
+BuildRequires: libblkid-devel git
+# for make test / getopt:
+BuildRequires: util-linux-ng
 %ifarch s390 s390x
 Requires: s390utils-base
+%endif
+%ifarch %{arm}
+Requires: uboot-tools
 %endif
 
 %description
@@ -25,7 +31,14 @@ environment.
 
 %prep
 %setup -q
+%patch0 -p1 -b .read-from-rfremix-release
 
+#git init
+#git config user.email "noone@example.com"
+#git config user.name "no one"
+#git add .
+#git commit -a -q -m "%{version} baseline"
+#git am %{patches} </dev/null
 
 %build
 make %{?_smp_mflags}
@@ -36,7 +49,12 @@ make test
 %install
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir}
-
+%ifarch %{arm}
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/
+install -p uboot $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/uboot
+mkdir -p $RPM_BUILD_ROOT/boot
+echo " " >> $RPM_BUILD_ROOT/boot/boot.scr
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -49,9 +67,154 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/new-kernel-pkg
 /sbin/grubby
 %{_mandir}/man8/*.8*
-
+%ifarch %{arm}
+%config(noreplace) %{_sysconfdir}/sysconfig/uboot
+%config(noreplace) /boot/boot.scr
+%endif
 
 %changelog
+* Fri Jan 04 2013 Peter Jones <pjones@redhat.com> - 8.22-1
+- Revert test case for rhbz#742885 - it's a work in progress that isn't
+  ready yet.
+
+* Fri Jan 04 2013 Peter Jones <pjones@redhat.com> - 8.21-1
+- Use systemd vconsole.conf and locale.conf if present
+  Resolves rhbz#881908
+- Avoid unnecessary stat calls (from Ville Skyttä)
+  Resolves rhbz#741135
+- Spelling fixes (Ville Skyttä)
+- Add a test case for rhbz#742885
+- Handle case-insensitive extlinux config files properly (from Johannes Weiner)
+
+* Tue Oct 02 2012 Peter Jones <pjones@redhat.com> - 8.20-1
+- Handle linuxefi initrd and removal correctly.
+  Resolves: rhbz#859285
+
+* Wed Sep 26 2012 Peter Jones <pjones@redhat.com> - 8.19-1
+- Don't accidentally migrate from linuxefi back to linux
+  Related: rhbz#859285
+
+* Fri Sep 21 2012 Peter Jones <pjones@redhat.com> - 8.18-1
+- Change the way the kernel load address is determined for ARM U-Boot.
+
+* Wed Aug 08 2012 Peter Jones <pjones@redhat.com> - 8.17-1
+- Update to 8.17
+- Fixes a "make test" failure.
+
+* Wed Aug 08 2012 Peter Jones <pjones@redhat.com> - 8.16-1
+- Update to 8.16
+- Handle "linuxefi" directive on grub2/uefi machines.
+
+* Thu Jul 19 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 8.15-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
+* Mon Jun 25 2012 Peter Jones <pjones@redhat.com> - 8.15-1
+- Update to 8.15
+- Revert dirname change from 8.13; it was wrong.
+
+* Thu Jun 14 2012 Peter Jones <pjones@redhat.com> - 8.14-1
+- Update to 8.14 to fix a build problem.
+
+* Thu Jun 14 2012 Peter Jones <pjones@redhat.com> - 8.13-1
+- Update to 8.13
+- Add some more ARM tweaks (dmartin)
+- Better support for other distros (crosa)
+
+* Tue Jun 12 2012 Peter Jones <pjones@redhat.com> - 8.12-2
+- Support UBOOT_IMGADDR override on ARM (blc)
+
+* Thu May 31 2012 Peter Jones <pjones@redhat.com> - 8.12-1
+- Update to 8.12
+- Preserve trailing indentation when splitting line elements (mads)
+  Resolves: rhbz#742720
+- Pick last device mounted on / (pjones,bcl)
+  Related: rhbz#820340
+  Related: rhbz#820351
+
+* Wed Mar 21 2012 Peter Jones <pjones@redhat.com> - 8.11-1
+- Update to 8.11
+  Resolves: rhbz#805310
+
+* Thu Mar 15 2012 Peter Jones <pjones@redhat.com> - 8.10-1
+- Update to 8.10
+- Use "isquote" where appropriate
+- Make --remove-kenrel support titles in grub2 (jianzhong.huang)
+- Use grub2 if it's there on ppc.
+
+* Fri Mar 02 2012 Peter Jones <pjones@redhat.com> - 8.9-1
+- Refactor grub2 title extraction, making it a function (Cleber Rosa)
+- Include prefix when printing kernel information (Cleber Rosa)
+- Implement support for "default saved" for grub2 (Cleber Rosa)
+- Try to display title when printing information with '--info' (Cleber Rosa)
+- new-kernel-pkg fails to find U-Boot. (D. Marlin)
+- Add support to new-kernel-pkg to recognize ARCH == armv5tel needed for Kir
+  (D.Marlin)
+- Include a / when one is missing in paths (#769641)
+- Fix hard coded paths so kernel's "make install" will DTRT.
+- Fix endswith() to correctly test its input for validity.
+
+* Tue Feb 07 2012 Dennis Gilmore <dennis@ausil.us> - 8.8-3
+- add uboot-tools requires on arm arches
+- add uboot config file on arm arches
+
+* Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 8.8-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
+
+* Tue Dec 20 2011 Peter Jones <pjones@redhat.com> - 8.8-1
+- Fix test cases from 8.7 to work on a system without /boot mounted.
+
+* Tue Dec 20 2011 Peter Jones <pjones@redhat.com> - 8.7-1
+- Add a --debug to try to help diagnose "No suitable template". (sandeen,pjones)
+
+* Mon Dec 19 2011 Peter Jones <pjones@redhat.com> - 8.6-1
+- Fix a "make test" errors introduced in 8.4-1
+
+* Sat Dec 17 2011 Peter Jones <pjones@redhat.com> - 8.5-1
+- Don't hardcode dracut path
+  Resolves: #768645
+
+* Thu Dec 08 2011 Adam Williamson <awilliam@redhat.com> - 8.4-1
+- Update to 8.4:
+	+ fix Loading... line for updated kernels
+	+ Add new '--default-title' feature
+	+ Add new '--default-index' feature
+	+ add feature for testing the output of a grubby command
+	+ Fix detection when comparing stage1 to MBR
+	+ do not link against glib-2.0
+	+ Don't crash if grubConfig not found
+	+ Adding extlinux support for new-kernel-pkg
+	+ Look for Debian / Ubuntu grub config files (#703260)
+	+ Make grubby recognize Ubuntu's spin of Grub2 (#703260)
+
+* Thu Sep 29 2011 Peter Jones <pjones@redhat.com> - 8.3-1
+- Fix new-kernel-pkg invocation of grubby for grub (patch from Mads Kiilerich)
+  Resolves: rhbz#725185
+
+* Wed Sep 14 2011 Peter Jones <pjones@redhat.com> - 8.2-1
+- Fixes for xen (from Michael Petullo)
+  Resolves: rhbz#658387
+
+* Fri Jul 22 2011 Peter Jones <pjones@redhat.com> - 8.1-1
+- Update to 8.1
+- Fix miss-spelled variable name in new-kernel-pkg
+
+* Thu Jul 21 2011 Peter Jones <pjones@redhat.com> - 8.0-1
+- Add support for grub2.
+
+* Tue Jun 07 2011 Brian C. Lane <bcl@redhat.com> - 7.0.18-1
+- Bump version to 7.0.18 (bcl)
+- Fixup new-kernel-pkg errors (#711493) (bcl)
+
+* Mon Jun 06 2011 Peter Jones <pjones@redhat.com> - 7.0.17-1
+- Fix references to wrong program name in new-kernel-pkg.8
+  Resolves: rhbz#663981
+
+* Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 7.0.16-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
+* Mon Jan 24 2011 Karsten Hopp <karsten@redhat.com> 7.0.16-2
+- add BR utils-linux-ng for getopt
+
 * Tue Jul 13 2010 Brian C. Lane <bcl@redhat.com> - 7.0.16-1
 - Update to 7.0.16
 - Add patch to check the return value of getuuidbydev
