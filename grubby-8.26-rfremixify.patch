@@ -1,0 +1,12 @@
+diff -urN grubby-8.26.orig/new-kernel-pkg grubby-8.26/new-kernel-pkg
+--- grubby-8.26.orig/new-kernel-pkg	2013-06-25 15:29:07.221644662 +0400
++++ grubby-8.26/new-kernel-pkg	2013-06-25 15:29:16.375645189 +0400
+@@ -182,7 +182,7 @@
+         title="$banner ($version)"
+     elif [ -f /etc/os-release ]; then
+         . /etc/os-release
+-        title="$NAME ($version) $VERSION"
++        title="$PRETTY_NAME"
+     elif [ -f /etc/redhat-release ]; then
+ 	title="$(sed 's/ release.*$//' < /etc/redhat-release) ($version)"
+     else
