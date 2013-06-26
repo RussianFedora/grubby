@@ -6,7 +6,7 @@ diff -urN grubby-8.26.orig/new-kernel-pkg grubby-8.26/new-kernel-pkg
      elif [ -f /etc/os-release ]; then
          . /etc/os-release
 -        title="$NAME ($version) $VERSION"
-+        title="$PRETTY_NAME"
++        title="RFRemix ($version) $VERSION"
      elif [ -f /etc/redhat-release ]; then
  	title="$(sed 's/ release.*$//' < /etc/redhat-release) ($version)"
      else

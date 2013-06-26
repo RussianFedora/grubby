@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.26
-Release: 2%{?dist}
+Release: 2.1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -76,6 +76,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed Jun 26 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 8.26-2.1.R
+- forgot kernel version
+
 * Tue Jun 25 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 8.26-2.R
 - read branding from PRETTY_NAME var
 
