@@ -1,6 +1,6 @@
 Name: grubby
-Version: 8.26
-Release: 2.1%{?dist}
+Version: 8.28
+Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -9,13 +9,15 @@ URL: http://git.fedorahosted.org/git/grubby.git
 # git clone git://git.fedorahosted.org/git/grubby.git
 # git archive --format=tar --prefix=grubby-%{version}/ HEAD |bzip2 > grubby-%{version}.tar.bz2
 Source0: %{name}-%{version}.tar.bz2
-Patch0:  0001-update-extlinux.conf-on-arm-arches-if-it-exists.patch
 Patch1:  grubby-8.26-rfremixify.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
 BuildRequires: libblkid-devel git
 # for make test / getopt:
 BuildRequires: util-linux-ng
+%ifarch aarch64 i686 x86_64 ppc ppc64
+BuildRequires: /usr/bin/grub2-editenv
+%endif
 %ifarch s390 s390x
 Requires: s390utils-base
 %endif
@@ -32,15 +34,6 @@ environment.
 
 %prep
 %setup -q
-
-#git init
-#git config user.email "noone@example.com"
-#git config user.name "no one"
-#git add .
-#git commit -a -q -m "%{version} baseline"
-#git am %{patches} </dev/null
-
-%patch0 -p1
 %patch1 -p1
 
 %build
@@ -76,6 +69,17 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri Aug 02 2013 Peter Jones <pjones@redhat.com> - 8.28-1.R
+- More work on grub's "saved_entry" system.
+  Resolves: rhbz#768106
+  Resolves: rhbz#736188
+
+* Tue Jul 30 2013 Peter Jones <pjones@redhat.com> - 8.27-1.R
+- Make grubby understand grub's "saved_entry" system
+  Resolves: rhbz#768106
+  Resolves: rhbz#736188
+- BuildRequire grub2 on appropriate platforms, for the test suite.
+
 * Wed Jun 26 2013 Arkady L. Shane <ashejn@russianfedora.ru> - 8.26-2.1.R
 - forgot kernel version
 
