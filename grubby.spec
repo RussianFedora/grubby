@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.28
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -9,7 +9,18 @@ URL: http://git.fedorahosted.org/git/grubby.git
 # git clone git://git.fedorahosted.org/git/grubby.git
 # git archive --format=tar --prefix=grubby-%{version}/ HEAD |bzip2 > grubby-%{version}.tar.bz2
 Source0: %{name}-%{version}.tar.bz2
-Patch1:  grubby-8.26-rfremixify.patch
+
+# https://lists.fedorahosted.org/pipermail/anaconda-patches/2013-November/007524.html
+Patch0: 0001-extlinux-Understand-default-properly.patch
+# https://lists.fedorahosted.org/pipermail/anaconda-patches/2013-November/007525.html
+Patch1: 0002-extlinux-Add-test-suite.patch
+# https://lists.fedorahosted.org/pipermail/anaconda-patches/2013-November/007522.html
+Patch2: 0003-grub-Fix-a-crash-with-kernel-line-without-being-prec.patch
+# https://lists.fedorahosted.org/pipermail/anaconda-patches/2013-November/007523.html
+Patch3: 0004-grub-Remove-a-redundant-test.patch
+
+Patch9:  grubby-8.26-rfremixify.patch
+
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
 BuildRequires: libblkid-devel git
@@ -34,7 +45,11 @@ environment.
 
 %prep
 %setup -q
+%patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch9 -p1
 
 %build
 make %{?_smp_mflags}
@@ -69,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon Jan 20 2014 Lubomir Rintel <lkundrak@v3.sk> - 8.28-2.R
+- Fix extlinux default
+
 * Fri Aug 02 2013 Peter Jones <pjones@redhat.com> - 8.28-1.R
 - More work on grub's "saved_entry" system.
   Resolves: rhbz#768106
