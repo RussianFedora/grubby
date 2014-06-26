@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.28
+Version: 8.35
 Release: 2%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -10,16 +10,7 @@ URL: http://git.fedorahosted.org/git/grubby.git
 # git archive --format=tar --prefix=grubby-%{version}/ HEAD |bzip2 > grubby-%{version}.tar.bz2
 Source0: %{name}-%{version}.tar.bz2
 
-# https://lists.fedorahosted.org/pipermail/anaconda-patches/2013-November/007524.html
-Patch0: 0001-extlinux-Understand-default-properly.patch
-# https://lists.fedorahosted.org/pipermail/anaconda-patches/2013-November/007525.html
-Patch1: 0002-extlinux-Add-test-suite.patch
-# https://lists.fedorahosted.org/pipermail/anaconda-patches/2013-November/007522.html
-Patch2: 0003-grub-Fix-a-crash-with-kernel-line-without-being-prec.patch
-# https://lists.fedorahosted.org/pipermail/anaconda-patches/2013-November/007523.html
-Patch3: 0004-grub-Remove-a-redundant-test.patch
-
-Patch9:  grubby-8.26-rfremixify.patch
+Patch9:  grubby-8.35-rfremixify.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
@@ -45,10 +36,6 @@ environment.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 %patch9 -p1
 
 %build
