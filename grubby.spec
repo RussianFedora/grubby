@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.35
-Release: 4%{?dist}
+Release: 7%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -9,8 +9,17 @@ URL: http://git.fedorahosted.org/git/grubby.git
 # git clone git://git.fedorahosted.org/git/grubby.git
 # git archive --format=tar --prefix=grubby-%{version}/ HEAD |bzip2 > grubby-%{version}.tar.bz2
 Source0: %{name}-%{version}.tar.bz2
-
-Patch9:  grubby-8.35-rfremixify.patch
+Patch0001: 0001-Don-t-go-past-the-last-element-of-indexVars-in-findE.patch
+Patch0002: 0002-Add-bls-test-harness-bits.patch
+Patch0003: 0003-grubby-fix-initrd-updating-when-multiboot-exist.patch
+Patch0004: 0004-Tell-a-slightly-better-fib-about-default-bootloader-.patch
+Patch0005: 0005-Make-findTemplate-actually-return-the-saved-default.patch
+Patch0006: 0006-Revert-Add-bls-test-harness-bits.patch
+Patch0007: 0007-Always-error-check-getLineByType.patch
+Patch0008: 0008-Add-devtree-support-to-extlinux-1088933.patch
+Patch0009: 0009-add-support-for-devicetree-directories-for-use-on-ar.patch
+Patch0010: 0010-cleanup-dtb-handling-to-work-in-the-supported-usecas.patch
+Patch1001: grubby-8.35-rfremixify.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
@@ -36,7 +45,17 @@ environment.
 
 %prep
 %setup -q
-%patch9 -p1
+%patch0001 -p1
+%patch0002 -p1
+%patch0003 -p1
+%patch0004 -p1
+%patch0005 -p1
+%patch0006 -p1
+%patch0007 -p1
+%patch0008 -p1
+%patch0009 -p1
+%patch0010 -p1
+%patch1001 -p1
 
 %build
 make %{?_smp_mflags}
@@ -72,6 +91,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Oct 23 2014 Arkady L. Shane <ashejn@russianfedora.ru> - 8.35-7.R
+- sync with upstream
+
 * Sat Aug 30 2014 Arkady L. Shane <ashejn@russianfedora.ru> - 8.28-4.R
 - fix license handling
 
