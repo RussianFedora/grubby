@@ -1,0 +1,39 @@
+From 15d36a8f27c5b14b290da99c4be8880bc35dc41b Mon Sep 17 00:00:00 2001
+From: Peter Jones <pjones@redhat.com>
+Date: Mon, 27 Oct 2014 18:10:00 -0400
+Subject: [PATCH] Treat kernel and kernel-core as identical in terms of
+ --make-default
+
+Depending on which kernel version, we'll either get kernel or
+kernel-core as --package.  Since we're unlikely to call something
+kernel-core-core, just treat them the same.
+
+Resolves: rhbz#1141414
+
+Signed-off-by: Peter Jones <pjones@redhat.com>
+---
+ new-kernel-pkg | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/new-kernel-pkg b/new-kernel-pkg
+index 70f6118..9f3b192 100755
+--- a/new-kernel-pkg
++++ b/new-kernel-pkg
+@@ -797,9 +797,11 @@ if [ -n "$dracut" -o -n "$adddracutargs" ]; then
+ fi
+ 
+ # set this as the default if we have the package and it matches
+-if [ "$mode" == "--install" -a "$UPDATEDEFAULT" == "yes" -a -n "$package" -a -n "$DEFAULTKERNEL" -a "$package" == "$DEFAULTKERNEL" ]; then
+-    makedefault="--make-default"
+-    [ -n "$verbose" ] && echo "making it the default based on config"
++if [ "$mode" == "--install" -a "$UPDATEDEFAULT" == "yes" -a -n "$package" -a -n "$DEFAULTKERNEL" ]; then
++    if [ "$package" == "$DEFAULTKERNEL" -o "${package}-core" == "$DEFAULTKERNEL" ]; then
++        makedefault="--make-default"
++        [ -n "$verbose" ] && echo "making it the default based on config"
++    fi
+ fi
+ 
+ if [ "$moddep" == "make" ]; then
+-- 
+1.9.3
+
