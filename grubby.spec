@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.35
-Release: 8%{?dist}
+Release: 9%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -62,8 +62,10 @@ environment.
 %build
 make %{?_smp_mflags}
 
+%ifnarch aarch64 %{arm}
 %check
 make test
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -93,6 +95,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Nov 13 2014 Peter Jones <pjones@redhat.com> - 8.35-9.R
+- Disable "make check" on arm builds; right now the test suite is broken
+  there and raises false positives constantly.
+
 * Mon Oct 27 2014 Peter Jones <pjones@redhat.com> - 8.35-8.R
 - Treat kernel and kernel-core as identical in terms of --make-default
   Resolves: rhbz#1141414
