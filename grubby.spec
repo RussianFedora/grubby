@@ -1,6 +1,6 @@
 Name: grubby
-Version: 8.35
-Release: 9%{?dist}
+Version: 8.37
+Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -9,18 +9,6 @@ URL: http://git.fedorahosted.org/git/grubby.git
 # git clone git://git.fedorahosted.org/git/grubby.git
 # git archive --format=tar --prefix=grubby-%{version}/ HEAD |bzip2 > grubby-%{version}.tar.bz2
 Source0: %{name}-%{version}.tar.bz2
-Patch0001: 0001-Don-t-go-past-the-last-element-of-indexVars-in-findE.patch
-Patch0002: 0002-Add-bls-test-harness-bits.patch
-Patch0003: 0003-grubby-fix-initrd-updating-when-multiboot-exist.patch
-Patch0004: 0004-Tell-a-slightly-better-fib-about-default-bootloader-.patch
-Patch0005: 0005-Make-findTemplate-actually-return-the-saved-default.patch
-Patch0006: 0006-Revert-Add-bls-test-harness-bits.patch
-Patch0007: 0007-Always-error-check-getLineByType.patch
-Patch0008: 0008-Add-devtree-support-to-extlinux-1088933.patch
-Patch0009: 0009-add-support-for-devicetree-directories-for-use-on-ar.patch
-Patch0010: 0010-cleanup-dtb-handling-to-work-in-the-supported-usecas.patch
-Patch0011: 0001-Treat-kernel-and-kernel-core-as-identical-in-terms-o.patch
-Patch1001: grubby-8.35-rfremixify.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
@@ -46,18 +34,6 @@ environment.
 
 %prep
 %setup -q
-%patch0001 -p1
-%patch0002 -p1
-%patch0003 -p1
-%patch0004 -p1
-%patch0005 -p1
-%patch0006 -p1
-%patch0007 -p1
-%patch0008 -p1
-%patch0009 -p1
-%patch0010 -p1
-%patch0011 -p1
-%patch1001 -p1
 
 %build
 make %{?_smp_mflags}
@@ -80,7 +56,6 @@ echo " " >> $RPM_BUILD_ROOT/boot/boot.scr
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-
 %files
 %defattr(-,root,root,-)
 %{!?_licensedir:%global license %%doc}
@@ -95,6 +70,11 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue Mar 17 2015 Peter Jones <pjones@redhat.com> - 8.37-1.R
+- Update to 8.37
+- Fix test case from 8.35 on ppc64
+  Resolves: rhbz#1202876
+
 * Thu Nov 13 2014 Peter Jones <pjones@redhat.com> - 8.35-9.R
 - Disable "make check" on arm builds; right now the test suite is broken
   there and raises false positives constantly.
