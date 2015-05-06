@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.37
+Version: 8.40
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -9,6 +9,7 @@ URL: http://git.fedorahosted.org/git/grubby.git
 # git clone git://git.fedorahosted.org/git/grubby.git
 # git archive --format=tar --prefix=grubby-%{version}/ HEAD |bzip2 > grubby-%{version}.tar.bz2
 Source0: %{name}-%{version}.tar.bz2
+Patch0:	grubby-8.35-rfremixify.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
@@ -34,6 +35,7 @@ environment.
 
 %prep
 %setup -q
+%patch0 -p1 -b .rfremixify
 
 %build
 make %{?_smp_mflags}
@@ -70,6 +72,25 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed Apr 15 2015 Peter Jones <pjones@redhat.com> - 8.40-1.R
+- Update to 8.40
+- More work on the thing that went to testing in 8.39
+  Resolves: rhbz#1211887
+
+* Tue Apr 14 2015 Peter Jones <pjones@redhat.com> - 8.39-1.R
+- Update to 8.39
+- Fix title extraction with some config file types
+  Resolves: rhbz#1204353
+  Resolves: rhbz#1204888
+  Resolves: rhbz#1206943
+
+* Tue Apr 14 2015 Peter Jones <pjones@redhat.com> - 8.38-1.R
+- Update to 8.38
+- Fix title extraction with some config file types
+  Resolves: rhbz#1204353
+  Resolves: rhbz#1204888
+  Resolves: rhbz#1206943
+
 * Tue Mar 17 2015 Peter Jones <pjones@redhat.com> - 8.37-1.R
 - Update to 8.37
 - Fix test case from 8.35 on ppc64
